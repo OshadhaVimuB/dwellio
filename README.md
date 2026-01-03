@@ -45,8 +45,8 @@ cd dwellio
 
 ### 2. Install Dependencies
 
-> Tip
-> Ensure Node.js is installed. This project uses npm to manage packages including React, Vite, and Jest.
+> [!TIP]
+>  Ensure Node.js is installed. This project uses npm to manage packages including React, Vite, and Jest.
 
 ```bash
 npm install
