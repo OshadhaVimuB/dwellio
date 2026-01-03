@@ -1,16 +1,82 @@
-# React + Vite
+# Dwellio – Estate Agent Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Advanced Client-Side Web Development (5COSC026W)**  
+**Final Coursework – 2025/2026**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 👤 Student Details
 
-## React Compiler
+| Field | Details |
+|------|--------|
+| **Name** | Oshadha Vimukthi |
+| **Student ID** | 20231600 |
+| **UoW ID** | w2120216 |
+| **University** | University of Westminster (IIT Sri Lanka) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Deployment
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The application is deployed and available at:  
+👉 **https://cw.oshadha.com**
+
+---
+
+## 📖 Project Overview
+
+Dwellio is a responsive Single Page Application developed using **React** and **Vite**. It simulates a real-world estate agent platform, allowing users to search for properties, view detailed information, and manage a **Favourites** list using drag-and-drop functionality.
+
+This project was built to satisfy the requirements of the **5COSC026W** module, demonstrating proficiency in React components, hooks, state management, client-side routing, and testing.
+
+---
+
+
+## ⚙️ Installation & Setup
+
+To run this project locally, follow the steps below.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/OshadhaVimuB/dwellio
+cd dwellio
+```
+
+### 2. Install Dependencies
+
+> Tip
+> Ensure Node.js is installed. This project uses npm to manage packages including React, Vite, and Jest.
+
+```bash
+npm install
+```
+
+### 3. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🧪 Running Tests
+
+This project includes automated tests covering search logic, rendering, and favourites functionality.
+
+To run the Jest test suite:
+
+```bash
+npm test
+```
+
+---
+
+
+© 2026 Oshadha Vimukthi
