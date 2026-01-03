@@ -19,7 +19,7 @@
 ## 🚀 Live Deployment
 
 The application is deployed and available at:  
-👉 **https://cw.oshadha.com**
+👉 **https://dwellio.oshadha.com**
 
 ---
 
