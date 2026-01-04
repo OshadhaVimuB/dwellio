@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Slider from 'rc-slider';
@@ -17,18 +17,8 @@ const ItemTypes = {
   FAVOURITE: 'FAVOURITE'
 };
 
-/**
- * SearchCard Component
- * Displays a single property card that can be dragged.
- * 
- * @param {Object} props - The component props.
- * @param {Object} props.property - The property data object.
- * @param {boolean} props.isFavourite - Whether the property is currently favourited.
- * @param {Function} props.toggleFav - Function to toggle favourite status.
- * @returns {JSX.Element} The rendered component.
- */
 const SearchCard = ({ property, isFavourite, toggleFav }) => {
-  // Drag hook to make the card draggable
+  const navigate = useNavigate();
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.PROPERTY,
     item: { id: property.id },
@@ -36,7 +26,12 @@ const SearchCard = ({ property, isFavourite, toggleFav }) => {
   }), [property.id]);
 
   return (
-    <div ref={drag} className={`search-card ${isDragging ? 'dragging' : ''}`} style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <div 
+      ref={drag} 
+      className={`search-card ${isDragging ? 'dragging' : ''}`} 
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+      onClick={() => navigate(`/property/${property.id}`)}
+    >
       <div className="sc-img">
         <img
           src={`/${property.picture}`}
@@ -49,6 +44,7 @@ const SearchCard = ({ property, isFavourite, toggleFav }) => {
         <button 
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             toggleFav(property.id);
           }} 
           className="fav-icon-btn"
@@ -66,9 +62,9 @@ const SearchCard = ({ property, isFavourite, toggleFav }) => {
         <p className="sc-desc">
           {property.type} • {property.bedrooms} Beds
         </p>
-        <Link to={`/property/${property.id}`} className="sc-link">
+        <span className="sc-link">
           View Details
-        </Link>
+        </span>
       </div>
     </div>
   );
@@ -87,15 +83,6 @@ SearchCard.propTypes = {
   toggleFav: PropTypes.func.isRequired,
 };
 
-/**
- * DraggableFavItem Component
- * Displays a favourited item in the sidebar that can be dragged out to remove.
- * 
- * @param {Object} props - The component props.
- * @param {Object} props.property - The property data object.
- * @param {Function} props.removeFav - Function to remove the property from favourites.
- * @returns {JSX.Element} The rendered component.
- */
 const DraggableFavItem = ({ property, removeFav }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.FAVOURITE,
@@ -141,65 +128,46 @@ DraggableFavItem.propTypes = {
   removeFav: PropTypes.func.isRequired,
 };
 
-/**
- * SearchPage Component
- * Main page for searching properties with filters and a favourites sidebar.
- * Implements drag-and-drop functionality for favourites.
- * 
- * @returns {JSX.Element} The rendered page.
- */
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
   
-  // Get location from URL query parameter
   const urlLocation = useMemo(() => searchParams.get('location') || '', [searchParams]);
   
-  // -- Filter States --
+  // Filter state
   const [loc, setLoc] = useState(urlLocation);
   const [price, setPrice] = useState([100000, 3000000]);
   const [bedrooms, setBedrooms] = useState([1, 10]);
   const [type, setType] = useState(null);
   const [date, setDate] = useState(null);
   
-  // -- Data State --
   const [favourites, setFavourites] = useState([]);
 
-  // Sync local state with URL location parameter
   useEffect(() => {
     if (urlLocation) {
       setLoc(urlLocation);
     }
   }, [urlLocation]);
 
-  /**
-   * Filter Logic
-   * Uses useMemo to efficiently filter properties based on all active criteria.
-   * This prevents re-calculation on every render unless dependencies change.
-   */
+  // Filter logic
   const filtered = useMemo(() => {
     if (!propertiesData || !propertiesData.properties) return [];
 
     let res = [...propertiesData.properties];
     
-    // Filter by Location (partial match, case-insensitive)
     if (loc) {
       res = res.filter(p => 
         p.location && p.location.toLowerCase().includes(loc.toLowerCase())
       );
     }
     
-    // Filter by Property Type
     if (type && type.value && type.value !== 'Any') {
       res = res.filter(p => p.type === type.value);
     }
     
-    // Filter by Price Range
     res = res.filter(p => (p.price || 0) >= price[0] && (p.price || 0) <= price[1]);
     
-    // Filter by Bedroom Count
     res = res.filter(p => (p.bedrooms || 0) >= bedrooms[0] && (p.bedrooms || 0) <= bedrooms[1]);
 
-    // Filter by Date Added
     if (date) {
       res = res.filter(p => {
         try {
@@ -215,19 +183,12 @@ const SearchPage = () => {
     return res;
   }, [loc, price, bedrooms, type, date]);
 
-  /**
-   * Toggles a property ID in the favourites list.
-   * @param {string} id - The property ID to toggle.
-   */
   const toggleFav = (id) => {
     setFavourites(prev =>
       prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
     );
   };
 
-  // -- Drag and Drop Monitors --
-
-  // Drop target for adding to favourites (Sidebar)
   const [, drop] = useDrop(() => ({
     accept: ItemTypes.PROPERTY,
     drop: (item) => {
@@ -237,7 +198,6 @@ const SearchPage = () => {
     },
   }), [favourites]);
 
-  // Drop target for removing from favourites (Main Area)
   const [{ isOver }, dropRemove] = useDrop(() => ({
     accept: ItemTypes.FAVOURITE,
     drop: (item) => {

@@ -27,7 +27,7 @@ const NavBar = () => {
           <Link to="/search" onClick={() => setMobileOpen(false)}>Favourites</Link>
           
           {/* Sign In Button */}
-          <Link to="/search" className="btn-nav">Sign In</Link>
+          <Link to="/search" className="btn-outline">Sign In</Link>
         </div>
 
         {/* Mobile Toggle */}

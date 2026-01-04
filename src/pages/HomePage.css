@@ -2,7 +2,7 @@
 .hero {
   height: 90vh;
   width: 100%;
-  background-image: url('images/background.jpg');
+  background-image: url('images/background.webp');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -149,6 +149,15 @@
   position: absolute;
   top: 15px;
   left: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  text-transform: capitalize;
 }
 
 .card-info {

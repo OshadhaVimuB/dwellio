@@ -6,21 +6,11 @@ import Footer from '../components/Layout/Footer';
 import propertiesData from '../data/properties.json';
 import './HomePage.css';
 
-/**
- * HomePage Component
- * Landing page with a hero search section and featured properties.
- * 
- * @returns {JSX.Element} The rendered home page.
- */
 const HomePage = () => {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
-  /**
-   * Handles the search form submission.
-   * Navigates to the search page with the location query parameter.
-   * @param {Event} e - The form submission event.
-   */
+  // Search handler
   const handleSearch = (e) => {
     e.preventDefault();
     navigate(`/search?location=${encodeURIComponent(search)}`);

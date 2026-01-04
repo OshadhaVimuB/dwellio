@@ -43,7 +43,9 @@
 .side-pics {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
   gap: 8px;
+  height: 100%;
 }
 
 .side-pics img {
@@ -56,6 +58,11 @@
 
 .side-pics img:hover {
   opacity: 0.8;
+}
+
+.side-pics img.active {
+  opacity: 0.6;
+  border: 2px solid var(--primary);
 }
 
 /* Content */
