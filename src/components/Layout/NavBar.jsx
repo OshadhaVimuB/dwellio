@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Layout.css';
 
+/**
+ * NavBar Component
+ * Responsive navigation bar with mobile hamburger menu.
+ * 
+ * @returns {JSX.Element} The rendered navigation bar.
+ */
 const NavBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -24,7 +31,11 @@ const NavBar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)}>
+        <button 
+          className="hamburger" 
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle navigation menu"
+        >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
@@ -33,5 +44,7 @@ const NavBar = () => {
     </nav>
   );
 };
+
+NavBar.propTypes = {};
 
 export default NavBar;
